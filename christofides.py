@@ -5,7 +5,7 @@ from Generate import Edge
 
 
 def christofides_alg(graph):
-    min_spanning_tree = get_min_spanning_tree
+    min_spanning_tree = get_min_spanning_tree(graph)
     odd_vertices = find_odd_vertices(graph, min_spanning_tree)
     min_perfect_matching = find_min_perfect_matching(graph, odd_vertices)
 
@@ -33,7 +33,7 @@ def christofides_alg(graph):
 
     result = skip_repeated_vertices(graph, circuit)
 
-    print(result)
+    return result
 
 
 def duplicate_edge(edges, edge):
@@ -100,7 +100,7 @@ def find_odd_vertices(graph, edges):
 
     for i in range(len(vertexDegree)):
         if vertexDegree[i] % 2 == 1:
-            verticesOfOddDegree.append[i]
+            verticesOfOddDegree.append(i)
 
     return verticesOfOddDegree
 
@@ -183,7 +183,7 @@ def make_eulerian_circuit(graph, edges):
 
         return result
 
-    for i in range(len(tour_edges)):
+    for i in range(len(edges)):
         tour_edges.append(False)
 
     for i in range(len(graph.vertices)):
@@ -198,10 +198,12 @@ def make_eulerian_circuit(graph, edges):
             sys.exit()
 
         circuit.append(edges[edge_to_follow])
-        if edge_to_follow.a != start:
-            curr_vertex = edges[edge_to_follow].a
-        else:
+
+        # Move across the edge to the next vertex (a, or b)
+        if edges[edge_to_follow].a == start:
             curr_vertex = edges[edge_to_follow].b
+        else:
+            curr_vertex = edges[edge_to_follow].a
         tour_edges[edge_to_follow] = True
         vertices_in_tour[curr_vertex] = True
 
@@ -211,10 +213,11 @@ def make_eulerian_circuit(graph, edges):
                 print("Could not find unused edge on given vertex.")
                 sys.exit()
 
-            if edge_to_follow.a != start:
-                curr_vertex = edges[edge_to_follow].a
-            else:
+            # Move across the edge to the next vertex (a, or b)
+            if edges[edge_to_follow].a == curr_vertex:
                 curr_vertex = edges[edge_to_follow].b
+            else:
+                curr_vertex = edges[edge_to_follow].a
             circuit.append(edges[edge_to_follow])
             tour_edges[edge_to_follow] = True
             vertices_in_tour[curr_vertex] = True
