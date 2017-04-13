@@ -189,15 +189,21 @@ def make_eulerian_circuit(graph, edges):
     for i in range(len(graph.vertices)):
         vertices_in_tour.append(False)
 
-    vertices_in_tour[i] = True
+    # Further code assumes we start our circuit at node 0
+    vertices_in_tour[0] = True
 
     while len(circuit) < len(edges):
+        minicircuit = []
         start, edge_to_follow = find_vertex_with_edges_not_in_tour()
+
         if start == -1:
             print("Could not find vertex with unused edge.")
             sys.exit()
 
-        circuit.append(edges[edge_to_follow])
+        if edges[edge_to_follow].a == start:
+            minicircuit.append(Edge(start, edges[edge_to_follow].b))
+        else:
+            minicircuit.append(Edge(start, edges[edge_to_follow].a))
 
         # Move across the edge to the next vertex (a, or b)
         if edges[edge_to_follow].a == start:
@@ -215,12 +221,26 @@ def make_eulerian_circuit(graph, edges):
 
             # Move across the edge to the next vertex (a, or b)
             if edges[edge_to_follow].a == curr_vertex:
+                minicircuit.append(Edge(curr_vertex, edges[edge_to_follow].b))
                 curr_vertex = edges[edge_to_follow].b
             else:
+                minicircuit.append(Edge(curr_vertex, edges[edge_to_follow].a))
                 curr_vertex = edges[edge_to_follow].a
-            circuit.append(edges[edge_to_follow])
             tour_edges[edge_to_follow] = True
             vertices_in_tour[curr_vertex] = True
+
+        # insert the minicircuit into the greater circuit smoothly
+        if len(circuit) == 0:
+            circuit = minicircuit
+        else:
+            for i in range(len(circuit)):
+                if circuit[i].a == start:
+
+                    # This loop will move the original circuit[i] value to the
+                    # end of minicircuit's cycle
+                    for j in range(len(minicircuit)):
+                        circuit.insert(i + j, minicircuit[j])
+                    break
 
     return circuit
 
@@ -232,17 +252,29 @@ def skip_repeated_vertices(graph, circuit):
     for i in range(len(graph.vertices)):
         vertices_visited.append(False)
 
+    # We must visit node 0 first for this to work.
     result.append(circuit[0])
-    vertices_visited[circuit[0].a] = True
+    vertices_visited[0] = True
+    curr_vertex = circuit[0].b
 
     for i in range(1, len(circuit)):
         curr_edge = circuit[i]
-        if vertices_visited[curr_edge.a]:
+
+        if curr_vertex == curr_edge.a:
+            next_vertex = curr_edge.b
+        else:
+            next_vertex = curr_edge.a
+
+        if vertices_visited[curr_vertex]:
             prev_edge = result.pop()
-            skip_edge = Edge(prev_edge.a, curr_edge.b)
+            if prev_edge.a == curr_vertex:
+                skip_edge = Edge(prev_edge.b, next_vertex)
+            else:
+                skip_edge = Edge(prev_edge.a, next_vertex)
             result.append(skip_edge)
         else:
             result.append(curr_edge)
-        vertices_visited[curr_edge.a] = True
+            vertices_visited[curr_vertex] = True
+        curr_vertex = next_vertex
 
     return result
