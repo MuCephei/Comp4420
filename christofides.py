@@ -1,7 +1,7 @@
 """Implementation of Christofides Algorithm."""
 import sys
 
-from Generate import Graph, Edge
+from Generate import Edge
 
 
 def christofides_alg(graph):
@@ -28,6 +28,12 @@ def christofides_alg(graph):
     for i in range(len(min_perfect_matching)):
         if not duplicate_edge(multigraph, min_perfect_matching[i]):
             multigraph.append(min_perfect_matching[i])
+
+    circuit = make_eulerian_circuit(graph, multigraph)
+
+    result = skip_repeated_vertices(graph, circuit)
+
+    print(result)
 
 
 def duplicate_edge(edges, edge):
@@ -138,44 +144,102 @@ def find_min_perfect_matching(graph, vertices):
 
 
 def make_eulerian_circuit(graph, edges):
-    verticesInTour = []
-    edgesInTour = []
+    """Eulerian circuit generator a la Hierholzer's alg."""
+    vertices_in_tour = []
+    tour_edges = []
     circuit = []
 
     def find_vertex_with_edges_not_in_tour():
         found = False
-        resultVertex = -1
-        resultEdge = -1
+        result_vertex = -1
+        result_edge = -1
 
-        for n in range(len(verticesInTour)):
-            if(verticesInTour[n]):
+        for n in range(len(vertices_in_tour)):
+            if(vertices_in_tour[n]):
                 for m in range(len(edges)):
                     if (
                         (edges[m].a == n or edges[m].b == n) and
-                        not edgesInTour[m]
+                        not tour_edges[m]
                     ):
                         found = True
-                        resultVertex = n
-                        resultEdge = m
+                        result_vertex = n
+                        result_edge = m
                         break
 
                 if found:
                     break
-        return resultVertex, resultEdge
+        return result_vertex, result_edge
 
-    for i in range(len(edgesInTour)):
-        edgesInTour.append(False)
+    def find_incident_unused_edge():
+        result = -1
+
+        for n in range(len(edges)):
+            if (
+                (not tour_edges[n]) and
+                (edges[n].a == curr_vertex or edges[n].b == curr_vertex)
+            ):
+                result = n
+                break
+
+        return result
+
+    for i in range(len(tour_edges)):
+        tour_edges.append(False)
 
     for i in range(len(graph.vertices)):
-        verticesInTour.append(False)
+        vertices_in_tour.append(False)
 
-    verticesInTour[i] = True
+    vertices_in_tour[i] = True
 
     while len(circuit) < len(edges):
-        start, edgeToFollow = find_vertex_with_edges_not_in_tour()
+        start, edge_to_follow = find_vertex_with_edges_not_in_tour()
         if start == -1:
             print("Could not find vertex with unused edge.")
             sys.exit()
 
-        circuit.append(edgeToFollow)
+        circuit.append(edges[edge_to_follow])
+        if edge_to_follow.a != start:
+            curr_vertex = edges[edge_to_follow].a
+        else:
+            curr_vertex = edges[edge_to_follow].b
+        tour_edges[edge_to_follow] = True
+        vertices_in_tour[curr_vertex] = True
 
+        while curr_vertex != start:
+            edge_to_follow = find_incident_unused_edge()
+            if edge_to_follow == -1:
+                print("Could not find unused edge on given vertex.")
+                sys.exit()
+
+            if edge_to_follow.a != start:
+                curr_vertex = edges[edge_to_follow].a
+            else:
+                curr_vertex = edges[edge_to_follow].b
+            circuit.append(edges[edge_to_follow])
+            tour_edges[edge_to_follow] = True
+            vertices_in_tour[curr_vertex] = True
+
+    return circuit
+
+
+def skip_repeated_vertices(graph, circuit):
+    vertices_visited = []
+    result = []
+
+    for i in range(len(graph.vertices)):
+        vertices_visited.append(False)
+
+    result.append(circuit[0])
+    vertices_visited[circuit[0].a] = True
+
+    for i in range(1, len(circuit)):
+        curr_edge = circuit[i]
+        if vertices_visited[curr_edge.a]:
+            prev_edge = result.pop()
+            skip_edge = Edge(prev_edge.a, curr_edge.b)
+            result.append(skip_edge)
+        else:
+            result.append(curr_edge)
+        vertices_visited[curr_edge.a] = True
+
+    return result
