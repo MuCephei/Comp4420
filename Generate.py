@@ -37,44 +37,6 @@ class Edge:
     __repr__ = __str__
 
 
-# TODO: We might want to copmute the distances between all edges only onece.
-def get_min_connecting_edge(graph, vertices):
-    minDistance = -1
-    minEdge = None
-
-    for i in range(len(vertices)):
-        if vertices[i]:  # If the vertex is in our tree do:
-            for j in range(len(graph.vertices)):
-                if not vertices[j]:  # If the vertex is not in our tree:
-                    distance = graph.distance(graph.vertices[i], graph.vertices[j])
-                    if (minDistance == -1) or (distance < minDistance):
-                        minDistance = distance
-                        minEdge = Edge(i, j)
-
-    return minEdge
-
-
-def get_min_spanning_tree(graph):
-    vertices = []
-    edges = []
-
-    if len(graph.vertices) > 0:
-        for i in range(len(graph.vertices)):
-            vertices.append(False)
-
-        vertices[0] = True  # Pick and arbitrary vertex and add it to the tree
-
-        for i in range(len(graph.vertices) - 1):
-            minEdge = get_min_connecting_edge(graph, vertices)
-            if minEdge is not None:
-                edges.append(minEdge)
-                vertices[minEdge.b] = True
-            else:
-                print("get_min_cennecting_edge returned nothing!")
-
-    return edges
-
-
 def is_edge_safe_to_remove(edge, edges, edges_as_matrix, size):
     if edges_as_matrix[edge[0]][edge[1]] == 1:
         vertices = Set()
@@ -112,9 +74,3 @@ def remove_edges(number_to_remove, number_of_vertices):
         all_edges.remove(edge)
         edges_as_matrix[edge[0]][edge[1]] = 0
     return edges_as_matrix
-
-
-graph = Graph(5, 6)
-print(graph)
-
-print(get_min_spanning_tree(graph))
