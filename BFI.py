@@ -1,8 +1,40 @@
 from Generate import Edge
 
 
+def helper(graph, start, curr, visited):
+    shortest_path = None
+    min_distance = -1
+    path = None
+    found = False
+
+    for i in range(len(visited)):
+        if not visited[i]:
+            found = True
+            path, distance = find_shortest_path(graph, curr, i)
+
+            new_visited = visited[:]
+            for j in range(len(path)):
+                new_visited[path[j].b] = True
+
+            new_path, new_distance = helper(graph, start, i, new_visited)
+            if min_distance == -1 or distance + new_distance < min_distance:
+                shortest_path = path + new_path
+                min_distance = distance + new_distance
+
+    if not found:  # There were no more unvisited vertices
+        shortest_path, min_distance = find_shortest_path(graph, curr, start)
+
+    return shortest_path, min_distance
+
+
 def bfi(graph):
-    print("hahaha nice try")
+    visited = []
+
+    for i in range(len(graph.vertices)):
+        visited.append(False)
+    visited[0] = True
+
+    return helper(graph, 0, 0, visited)
 
 
 def find_shortest_path(graph, start, end):
@@ -38,9 +70,13 @@ def find_shortest_path(graph, start, end):
         smallest = -1
 
         for m in range(len(visited)):
-            if not visited[m] and (distance[m] < min_distance or
-                                   min_distance == -1):
+            if (
+                not visited[m] and
+                distance[m] is not None and
+                (distance[m] < min_distance or min_distance == -1)
+            ):
                 smallest = m
+                min_distance = distance[m]
 
         return smallest
 
@@ -67,4 +103,4 @@ def find_shortest_path(graph, start, end):
         path.insert(0, Edge(curr, prev))
         prev = curr
 
-    return path
+    return path, distance[end]

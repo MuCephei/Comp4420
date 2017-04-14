@@ -10,10 +10,12 @@ test_graph.all_edges = [[], [0], [0, 0], [0, 1, 0], [1, 0, 1, 1]]
 start = 0
 end = 1
 print("Finding shortest path from " + str(start) + " to " + str(end) + ":")
-print(find_shortest_path(test_graph, start, end))
+path, distance = find_shortest_path(test_graph, start, end)
+print(str(path) + "\nDistance: " + str(distance))
 
 print("\nFinding BFI CCTP cycle:")
-print(bfi(test_graph))
+path, distance = bfi(test_graph)
+print(str(path) + "\nDistance: " + str(distance))
 
 print("\nFinding TSP Chrsitofides solution:")
 print(christofides_alg(test_graph))
