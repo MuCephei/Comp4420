@@ -5,10 +5,11 @@ from sets import Set
 
 def cyclic_routing(graph):
     edges = graph.all_edges
-    vertices = [graph.vertices,[]]
+    vertices = [[],[]]
     tour = []
     for point in christofides_alg(graph):
-        vertices[1].append(graph.vertices[point.b])
+        vertices[0].append(point.b)
+        vertices[1].append(point.b)
     path = []
     s = 0
     m = 1
@@ -56,21 +57,16 @@ def shortcut(direction, m, vertices, edges, path, all_vertices):
             li_max = max(l, mi)
             lj_min = min(l, mj)
             lj_max = max(l, mj)
-            print(m,j,i, l, mi, mj)
-            print(edges)
-            print(all_vertices)
-            print(vertices[m])
             while all_vertices[l] != vertices[m][j] and (not edges[li_max][li_min] or not edges[lj_max][lj_min]):
-                li_min = min(l, mi)
-                li_max = max(l, mi)
-                lj_min = min(l, mj)
-                lj_max = max(l, mj)
-                print(m,j,i, l, mi, mj)
                 if not edges[li_max][li_min]:
                     e.add((l, mi))
                 if not edges[lj_max][lj_min]:
                     e.add((mj, l))
                 l = l + 1
+                li_min = min(l, mi)
+                li_max = max(l, mi)
+                lj_min = min(l, mj)
+                lj_max = max(l, mj)
             if all_vertices[l] == vertices[m][j]:
                 vertices[m+1].remove(vertices[m][j])
                 path = path + [(mi, l), (l, mj)]
