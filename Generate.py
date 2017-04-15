@@ -2,7 +2,6 @@ import random
 import math
 from sets import Set
 
-
 class Graph:
     max_x = 100
     max_y = 100
@@ -19,9 +18,7 @@ class Graph:
         return math.sqrt((a[1] - b[1])**2 + (a[0] - b[0])**2)
 
     def __str__(self):
-        print(self.vertices)
-        print(self.all_edges)
-        return ""
+        return str(self.vertices) + '\n' + str(self.all_edges)
 
 
 class Edge:

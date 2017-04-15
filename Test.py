@@ -1,10 +1,13 @@
+import CCTP
 from Generate import Graph
-from Christofides import christofides_alg
+from christofides import christofides_alg
 
-test_graph = Graph(5, 6)
-test_graph.all_edges = [[], [0], [00], [000], [0000]]
-test_graph.number_of_broken_edge = 0
-
-test_graph.vertices = [[0, 0], [1, 0], [0, 1], [-1, 0], [0, -1]]
-
+test_graph = Graph(20, 100)
+print(test_graph)
 print(christofides_alg(test_graph))
+print("-------")
+print(test_graph)
+print("-------")
+path = CCTP.cyclic_routing(test_graph)
+print("-------")
+print(path)
