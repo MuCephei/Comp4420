@@ -53,12 +53,9 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
         full_path = _full_path
     i = 0
     j = 1
-    print(best_path)
-    print(full_path)
     while j < len(best_path):
         vi = best_path[i]
         vj = best_path[j]
-        print(vi, vj)
         min_ij = min(vi,vj)
         max_ij = max(vi,vj)
         if edges[max_ij][min_ij]:
@@ -69,8 +66,6 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
         else:
             l = full_path.index(best_path[i]) + 1
             vl = full_path[l]
-            print("vl")
-            print(vl)
             min_li = min(vl, vi)
             max_li = max(vl, vi)
             min_lj = min(vl, vj)
