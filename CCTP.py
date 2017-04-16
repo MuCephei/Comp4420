@@ -4,77 +4,89 @@ import copy
 from sets import Set
 
 def cyclic_routing(graph):
-    edges = graph.all_edges
+    graph_edges = graph.all_edges
+    edges = []
     vertices = [[],[]]
     tour = []
-    for point in christofides_alg(graph):
-        vertices[0].append(point.b)
-        vertices[1].append(point.b)
+    christofides_route = christofides_alg(graph)
+    for point in christofides_route:
+        vertices[0].append(point.a)
+        vertices[1].append(point.a)
+
+    for row_index in range(len(graph_edges)):
+        edges.append([])
+        for col_index in range(row_index):
+            tour_row = christofides_route[row_index].a
+            tour_col = christofides_route[col_index].a
+            _max = max(tour_row, tour_col)
+            _min = min(tour_row, tour_col)
+            edges[row_index].append(graph_edges[_max][_min])
+    print(edges)
     path = []
     s = 0
     m = 1
-    vertices[m].remove(vertices[0][s])
-    p = [0]
+    print(vertices[m])
     direction = True
-    while len(vertices[m]) > 1:
-        shortcut_path = []
-        for i in range(len(vertices[m])):
-            shortcut_path.append(vertices[m][i])
-        p.append(shortcut_path)
+    to_visit = [0,vertices[0]]
+    to_visit[1].remove(s)
+    while to_visit > 0:
         if m == 1 or vertices[m][0] == vertices[m-1][len(vertices[m-1]) - 1]:
-            path = shortcut(direction, m, vertices, edges, path, vertices[0])
+            path, to_visit = shortcut(direction, m, vertices, edges, path, vertices[0], to_visit)
             if vertices[m+1] == vertices[m]:
                 #if nothing happened
-                path = shortcut(not direction, m, vertices, edges, path, vertices[0])
+                path, to_visit = shortcut(not direction, m, vertices, edges, path, vertices[0], to_visit)
         else:
             direction = not direction
-            path = shortcut(direction, m, vertices, edges, path, vertices[0])
+            path, to_visit = shortcut(direction, m, vertices, edges, path, vertices[0], to_visit)
         m += 1
     return path
 
-def shortcut(direction, m, vertices, edges, path, all_vertices):
+def shortcut(direction, m, vertices, edges, path, all_vertices, to_visit):
     #foreward direction is true, backwards is false
     if not direction:
         vertices[m] = vertices[m][::-1]
     i = 0
     j = 1
-    e = Set()
     vertices.append(copy.deepcopy(vertices[m]))
     while j < len(vertices[m]):
-        mj = _get_index(vertices[m][j], all_vertices)
-        mi = _get_index(vertices[m][i], all_vertices)
-        ij_min = min(mi, mj)
-        ij_max = max(mi,mj)
+        print(i,j)
+        ij_min = min(i, j)
+        ij_max = max(i, j)
         if edges[ij_max][ij_min]:
+            print(vertices[m+1])
+            print("removing", direction)
             vertices[m+1].remove(vertices[m][j])
-            path = path + [(mi, mj)]
+            to_visit.remove(vertices[m][j])
+            print(vertices[m+1])
+            path = path + [(vertices[m][i], vertices[m][j])]
+            print((vertices[m][i],vertices[m][j]))
             i = j
             j = i + 1
         else:
-            e.add(((mj, mi)))
-            l = mi + 1
-            li_min = min(l, mi)
-            li_max = max(l, mi)
-            lj_min = min(l, mj)
-            lj_max = max(l, mj)
-            while all_vertices[l] != vertices[m][j] and (not edges[li_max][li_min] or not edges[lj_max][lj_min]):
-                if not edges[li_max][li_min]:
-                    e.add((l, mi))
-                if not edges[lj_max][lj_min]:
-                    e.add((mj, l))
+            l = i + 1
+            li_min = min(l, i)
+            li_max = max(l, i)
+            lj_min = min(l, j)
+            lj_max = max(l, j)
+            while l < len(all_vertices) and all_vertices[l] != vertices[m][j] and (not edges[li_max][li_min] or not edges[lj_max][lj_min]):
                 l = l + 1
-                li_min = min(l, mi)
-                li_max = max(l, mi)
-                lj_min = min(l, mj)
-                lj_max = max(l, mj)
-            if all_vertices[l] == vertices[m][j]:
+                li_min = min(l, i)
+                li_max = max(l, i)
+                lj_min = min(l, j)
+                lj_max = max(l, j)
+            if l < len(all_vertices) and all_vertices[l] != vertices[m][j]:
+                print(vertices[m+1])
+                print("removing", direction)
                 vertices[m+1].remove(vertices[m][j])
-                path = path + [(mi, l), (l, mj)]
+                to_visit.remove(vertices[m][j])
+                print(vertices[m+1])
+                path = path + [(vertices[m][i], l), (l, vertices[m][j])]
+                print((vertices[m][i],l), (l,vertices[m][j]))
                 i = j
                 j = i + 1
             else:
                 j = j + 1
-    return path
+    return path, to_visit
 
 def _get_index(vertex, all_vertices):
     return all_vertices.index(vertex)
