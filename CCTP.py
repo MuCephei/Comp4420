@@ -33,11 +33,12 @@ def cyclic_routing(graph):
             if len(to_visit[m+1]) == len(to_visit[m]):
                 path = shortcut(not direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
                 if len(to_visit[m+1]) == len(to_visit[m]):
-                    shortest_route, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
-                    path = path + shortest_route
+                    path, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
         else:
             direction = not direction
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+            if len(to_visit[m+1]) == len(to_visit[m]):
+                path, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
         current_node = path[-1].b
         m = m + 1
     #now return to s
@@ -104,4 +105,4 @@ def brute_force(graph, current_node, end, to_visit, path, m):
     for e in shortest_route:
         if e.b in to_visit[m+1]:
             to_visit[m+1].remove(e.b)
-    return path
+    return path, distance
