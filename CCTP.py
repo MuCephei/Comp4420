@@ -30,8 +30,11 @@ def cyclic_routing(graph):
 
         if m == 1 or best_path[m][0] == best_path[m-1][len(to_visit[m-1])]:
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
-            if to_visit[m+1] is to_visit[m]:
+            if len(to_visit[m+1]) == len(to_visit[m]):
                 path = shortcut(not direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+                if len(to_visit[m+1]) == len(to_visit[m]):
+                    shortest_route, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
+                    path = path + shortest_route
         else:
             direction = not direction
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
@@ -41,13 +44,18 @@ def cyclic_routing(graph):
     if edges[current_node][s]:
         path = path + [Edge(current_node, s)]
     else:
-        #All vertecies have been visited
+        #All vertices have been visited
         shortest_route, distance = BFI.find_shortest_path(graph, current_node, s)
         path = path + shortest_route
-    return path
+    distance = 0
+    vertices = graph.vertices
+    for edge in path:
+        distance = distance + graph.distance(vertices[edge.a], vertices[edge.b])
+    return path, distance
 
 def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
-    to_visit.append(copy.deepcopy(to_visit[m]))
+    if len(to_visit) == m + 1:
+        to_visit.append(copy.deepcopy(to_visit[m]))
     if not direction:
         best_path = [best_path[0]] + best_path[::-1][:-1]
         full_path = [_full_path[0]] + _full_path[::-1][:-1]
@@ -88,25 +96,12 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
                 j = j + 1
     return path
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def brute_force(graph, current_node, end, to_visit, path, m):
+    #This gets used when n - 1 < k
+    #And there is no single node between the start and end
+    shortest_route, distance = BFI.find_shortest_path(graph, current_node, end)
+    path = path + shortest_route
+    for e in shortest_route:
+        if e.b in to_visit[m+1]:
+            to_visit[m+1].remove(e.b)
+    return path
