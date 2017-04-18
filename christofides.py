@@ -6,9 +6,6 @@ from Generate import Edge
 
 def christofides_alg(graph):
     min_spanning_tree = get_min_spanning_tree(graph)
-    odd_vertices = find_odd_vertices(graph, min_spanning_tree)
-    min_perfect_matching = find_min_perfect_matching(graph, odd_vertices)
-
     # standardize edges such that a < b (to make removing duplicates easier)
     for i in range(len(min_spanning_tree)):
         edge = min_spanning_tree[i]
@@ -16,6 +13,9 @@ def christofides_alg(graph):
             temp = edge.a
             edge.a = edge.b
             edge.b = temp
+
+    odd_vertices = find_odd_vertices(graph, min_spanning_tree)
+    min_perfect_matching = find_min_perfect_matching(graph, odd_vertices, min_spanning_tree)
 
     for i in range(len(min_perfect_matching)):
         edge = min_perfect_matching[i]
@@ -106,7 +106,8 @@ def find_odd_vertices(graph, edges):
 
 
 # Important: assumes an edge exists between any two nodes.
-def find_min_perfect_matching(graph, vertices):
+# This assumption is an issue because then we don't get the min matching we need
+def find_min_perfect_matching(graph, vertices, min_spanning_tree):
     matchedVertices = []
     matching = []
 
@@ -118,15 +119,17 @@ def find_min_perfect_matching(graph, vertices):
         for first in range(len(vertices)):
             if not matchedVertices[first]:
                 for second in range(len(vertices)):
-                    if (not matchedVertices[second]) and first != second:
-                        distance = graph.distance(
-                            graph.vertices[vertices[first]],
-                            graph.vertices[vertices[second]]
-                        )
-                        if minDistance == -1 or distance < minDistance:
-                            minDistance = distance
-                            result1 = first
-                            result2 = second
+                    if Edge(vertices[first], vertices[second]) not in min_spanning_tree and\
+                    Edge(vertices[second], vertices[first]) not in min_spanning_tree:
+                        if (not matchedVertices[second]) and first != second:
+                            distance = graph.distance(
+                                graph.vertices[vertices[first]],
+                                graph.vertices[vertices[second]]
+                            )
+                            if minDistance == -1 or distance < minDistance:
+                                minDistance = distance
+                                result1 = first
+                                result2 = second
 
         return result1, result2
 

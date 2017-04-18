@@ -31,6 +31,9 @@ class Edge:
     def __str__(self):
         return str(self.a) + " - " + str(self.b)
 
+    def __eq__(self, other):
+        return self.a == other.a and self.b == other.b
+
     __repr__ = __str__
 
 
