@@ -32,8 +32,6 @@ def cyclic_routing(graph):
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
             if len(to_visit[m+1]) == len(to_visit[m]):
                 path = shortcut(not direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
-                if len(to_visit[m+1]) == len(to_visit[m]):
-                    path, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
         else:
             direction = not direction
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
@@ -46,7 +44,7 @@ def cyclic_routing(graph):
         path = path + [Edge(current_node, s)]
     else:
         #All vertices have been visited
-        shortest_route, distance = BFI.find_shortest_path(graph, current_node, s)
+        shortest_route, distance = BFI.find_shortest_path(graph, graph.all_edges, current_node, s)
         path = path + shortest_route
     distance = 0
     vertices = graph.vertices
@@ -96,13 +94,3 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
             else:
                 j = j + 1
     return path
-
-def brute_force(graph, current_node, end, to_visit, path, m):
-    #This gets used when n - 1 < k
-    #And there is no single node between the start and end
-    shortest_route, distance = BFI.find_shortest_path(graph, current_node, end)
-    path = path + shortest_route
-    for e in shortest_route:
-        if e.b in to_visit[m+1]:
-            to_visit[m+1].remove(e.b)
-    return path, distance

@@ -10,7 +10,7 @@ def helper(graph, start, curr, visited):
     for i in range(len(visited)):
         if not visited[i]:
             found = True
-            path, distance = find_shortest_path(graph, curr, i)
+            path, distance = find_shortest_path(graph, graph.all_edges, curr, i)
 
             new_visited = visited[:]
             for j in range(len(path)):
@@ -22,7 +22,7 @@ def helper(graph, start, curr, visited):
                 min_distance = distance + new_distance
 
     if not found:  # There were no more unvisited vertices
-        shortest_path, min_distance = find_shortest_path(graph, curr, start)
+        shortest_path, min_distance = find_shortest_path(graph, graph.all_edges, curr, start)
 
     return shortest_path, min_distance
 
@@ -37,7 +37,7 @@ def bfi(graph):
     return helper(graph, 0, 0, visited)
 
 
-def find_shortest_path(graph, start, end):
+def find_shortest_path(graph, edges, start, end):
     """A la Dijkstra."""
     distance = []
     visited = []
@@ -47,11 +47,11 @@ def find_shortest_path(graph, start, end):
         neighbors = []
 
         for n in range(len(graph.all_edges[curr])):
-            if graph.all_edges[curr][n] == 1:
+            if edges[curr][n] == 1:
                 neighbors.append(n)
 
-        for n in range(curr + 1, len(graph.all_edges)):
-            if graph.all_edges[n][curr] == 1:
+        for n in range(curr + 1, len(edges)):
+            if edges[n][curr] == 1:
                 neighbors.append(n)
 
         for n in range(len(neighbors)):
