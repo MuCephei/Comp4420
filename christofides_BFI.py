@@ -5,7 +5,6 @@ import copy
 from sets import Set
 
 def christofides_BFI(graph):
-    #Do not use this right now, it's not quite a solution to the problem we are facing
     christofides_route = christofides_alg(graph)
     edges = [[0 for n in range(m)] for m in range(len(graph.vertices))]
     total_distance = 0

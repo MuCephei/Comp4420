@@ -35,17 +35,16 @@ def cyclic_routing(graph):
         else:
             direction = not direction
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
-            if len(to_visit[m+1]) == len(to_visit[m]):
-                path, distance = brute_force(graph, current_node, best_path[m][1], to_visit, path, m)
         current_node = path[-1].b
         m = m + 1
     #now return to s
     if edges[current_node][s]:
         path = path + [Edge(current_node, s)]
     else:
-        #All vertices have been visited
-        shortest_route, distance = BFI.find_shortest_path(graph, graph.all_edges, current_node, s)
-        path = path + shortest_route
+        to_visit[m] = Set()
+        to_visit[m].add(s)
+        start_index = tour.index(current_node)
+        path = shortcut(direction, [current_node, s], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
     distance = 0
     vertices = graph.vertices
     for edge in path:
