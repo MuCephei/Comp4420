@@ -12,6 +12,7 @@ def cyclic_routing(graph):
     to_visit = [Set()]
     s = 0
     m = 1
+    num_brute = 0.0
     best_path = [[]]
     current_node = s
     path = []
@@ -41,6 +42,7 @@ def cyclic_routing(graph):
                     while best_path[m][target] not in seen:
                         target = target + 1
                     path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
+                    num_brute = num_brute + 1
         else:
             direction = not direction
             path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path, seen, seen_edges)
@@ -49,6 +51,7 @@ def cyclic_routing(graph):
                 while best_path[m][target] not in seen:
                     target = target + 1
                 path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
+                num_brute = num_brute + 1
         current_node = path[-1].b
         m = m + 1
     #now return to s
@@ -64,7 +67,7 @@ def cyclic_routing(graph):
     vertices = graph.vertices
     for edge in path:
         distance = distance + graph.distance(vertices[edge.a], vertices[edge.b])
-    return path, distance
+    return path, distance, num_brute
 
 def see(current_node, edges, seen, seen_edges):
         for x in range(current_node):
