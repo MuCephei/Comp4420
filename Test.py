@@ -8,7 +8,7 @@ from BFI import find_shortest_path, bfi
 num_ver = 20
 max_num_deleted = 150
 intervals = 10
-num_tests = 5
+num_tests = 50
 total_distances_cBFI = [0 for n in range(intervals)]
 averages_cBFI = [0 for n in range(intervals)]
 total_distances_CCTP = [0 for n in range(intervals)]

@@ -41,7 +41,7 @@ def cyclic_routing(graph):
                     target = 1
                     while best_path[m][target] not in seen:
                         target = target + 1
-                    path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
+                    path = brute_force(graph, seen_edges, current_node, best_path[m][target], path, to_visit, m, edges, seen)
                     num_brute = num_brute + 1
         else:
             direction = not direction
@@ -50,7 +50,7 @@ def cyclic_routing(graph):
                 target = 1
                 while best_path[m][target] not in seen:
                     target = target + 1
-                path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
+                path = brute_force(graph, seen_edges, current_node, best_path[m][target], path, to_visit, m, edges, seen)
                 num_brute = num_brute + 1
         current_node = path[-1].b
         m = m + 1
