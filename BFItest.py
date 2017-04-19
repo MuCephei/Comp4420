@@ -4,10 +4,10 @@ from Generate import Graph
 from christofides import christofides_alg
 from BFI import find_shortest_path, bfi
 
-num_ver = 10
-max_num_deleted = 30
+num_ver = 5
+max_num_deleted = 6
 intervals = 2
-num_tests = 50
+num_tests = 25
 total_distances_BFI = [0 for n in range(intervals)]
 averages_BFI = [0 for n in range(intervals)]
 total_distances_cBFI = [0 for n in range(intervals)]
@@ -30,9 +30,10 @@ for i in range(intervals):
 
     tests = [Graph(num_ver, num_deleted) for n in range(num_tests)]
     for test in tests:
-        path_BFO, distance, = bfi(test)
-        total_distances_BFI = max(max_distance_BFI, distance)
-        min_distance_BFO = min(min_distance_BFI, distance)
+        path_BFI, distance, = bfi(test)
+        total_distances_BFI[i] = total_distances_BFI[i] + distance
+        max_distance_BFI = max(max_distance_BFI, distance)
+        min_distance_BFI = min(min_distance_BFI, distance)
 
         path_cBFI, distance = christofides_BFI.christofides_BFI(test)
         total_distances_cBFI[i] = total_distances_cBFI[i] + distance
@@ -44,7 +45,7 @@ for i in range(intervals):
         total_num_brute[i] = total_num_brute[i] + num_brute
         max_distance_CCTP = max(max_distance_CCTP, distance)
         min_distance_CCTP = min(min_distance_CCTP, distance)
-    averages_BFI = total_distances_BFI[i]/num_tests
+    averages_BFI[i] = total_distances_BFI[i]/num_tests
     averages_cBFI[i] = total_distances_cBFI[i]/num_tests
     averages_CCTP[i] = total_distances_CCTP[i]/num_tests
     averages_num_brute[i] = total_num_brute[i]/num_tests
