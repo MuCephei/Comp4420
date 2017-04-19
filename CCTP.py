@@ -7,6 +7,7 @@ from sets import Set
 def cyclic_routing(graph):
     christofides_route = christofides_alg(graph)
     edges = graph.all_edges
+    seen_edges = [[0 for n in range(m)] for m in range(len(graph.vertices))]
     tour = []
     to_visit = [Set()]
     s = 0
@@ -14,6 +15,9 @@ def cyclic_routing(graph):
     best_path = [[]]
     current_node = s
     path = []
+    seen = Set()
+    seen.add(s)
+    see(s, edges, seen, seen_edges)
     direction = True
     for point in christofides_route:
         tour.append(point.a)
@@ -29,12 +33,22 @@ def cyclic_routing(graph):
                 best_path[m].append(point)
 
         if m == 1 or best_path[m][0] == best_path[m-1][len(to_visit[m-1])]:
-            path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+            path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path, seen, seen_edges)
             if len(to_visit[m+1]) == len(to_visit[m]):
-                path = shortcut(not direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+                path = shortcut(not direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path, seen, seen_edges)
+                if len(to_visit[m+1]) == len(to_visit[m]):
+                    target = 1
+                    while best_path[m][target] not in seen:
+                        target = target + 1
+                    path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
         else:
             direction = not direction
-            path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+            path = shortcut(direction, best_path[m], tour[start_index:] + tour[:start_index], to_visit, m, edges, path, seen, seen_edges)
+            if len(to_visit[m+1]) == len(to_visit[m]):
+                target = 1
+                while best_path[m][target] not in seen:
+                    target = target + 1
+                path = brute_force(graph, seen_edges, current_node, best_path[m][1], path, to_visit, m, edges, seen)
         current_node = path[-1].b
         m = m + 1
     #now return to s
@@ -44,14 +58,25 @@ def cyclic_routing(graph):
         to_visit[m] = Set()
         to_visit[m].add(s)
         start_index = tour.index(current_node)
-        path = shortcut(direction, [current_node, s], tour[start_index:] + tour[:start_index], to_visit, m, edges, path)
+        to_visit.append(copy.deepcopy(to_visit[m]))
+        path = brute_force(graph, seen_edges, current_node, s, path, to_visit, m, edges, seen)
     distance = 0
     vertices = graph.vertices
     for edge in path:
         distance = distance + graph.distance(vertices[edge.a], vertices[edge.b])
     return path, distance
 
-def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
+def see(current_node, edges, seen, seen_edges):
+        for x in range(current_node):
+            if edges[current_node][x] == 1 and x not in seen:
+                seen.add(x)
+                seen_edges[current_node][x] = 1
+        for y in range(current_node + 1, len(edges[-1]) + 1):
+            if edges[y][current_node] == 1 and y not in seen:
+                seen.add(y)
+                seen_edges[y][current_node] = 1
+
+def shortcut(direction, best_path, _full_path, to_visit, m, edges, path, seen, seen_edges):
     if len(to_visit) == m + 1:
         to_visit.append(copy.deepcopy(to_visit[m]))
     if not direction:
@@ -69,6 +94,7 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
         if edges[max_ij][min_ij]:
             to_visit[m+1].remove(vj)
             path = path + [Edge(vi, vj)]
+            see(vj, edges, seen, seen_edges)
             i = j
             j = j + 1
         else:
@@ -88,8 +114,16 @@ def shortcut(direction, best_path, _full_path, to_visit, m, edges, path):
             if vl != vj:
                 to_visit[m+1].remove(vj)
                 path = path + [Edge(vi, vl), Edge(vl, vj)]
+                see(vj, edges, seen, seen_edges)
                 i = j
                 j = j + 1
             else:
                 j = j + 1
+    return path
+
+def brute_force(graph, seen_edges, current_node, target_node, path, to_visit, m, edges, seen):
+    shortest_route, distance = BFI.find_shortest_path(graph, seen_edges, current_node, target_node)
+    path = path + shortest_route
+    to_visit[m+1].remove(target_node)
+    see(target_node, edges, seen, seen_edges)
     return path

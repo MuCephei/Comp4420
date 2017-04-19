@@ -46,7 +46,7 @@ def find_shortest_path(graph, edges, start, end):
     def update_neighbors():
         neighbors = []
 
-        for n in range(len(graph.all_edges[curr])):
+        for n in range(len(edges[curr])):
             if edges[curr][n] == 1:
                 neighbors.append(n)
 
