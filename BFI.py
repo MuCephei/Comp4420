@@ -57,7 +57,7 @@ def find_shortest_path(graph, edges, start, end):
         for n in range(len(neighbors)):
             if not visited[neighbors[n]]:
                 new_distance = distance[curr] + graph.distance(
-                    graph.vertices[curr], graph.vertices[n]
+                    graph.vertices[curr], graph.vertices[neighbors[n]]
                 )
 
                 old_distance = distance[neighbors[n]]
