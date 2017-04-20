@@ -7,13 +7,13 @@ from Generate import Graph
 from christofides import christofides_alg
 from BFI import find_shortest_path, bfi
 
-num_ver = 8
+num_ver = 25
 min_num_edges = num_ver - 1
 max_num_edges = (num_ver * (num_ver - 1))/2
 max_num_deleted = max_num_edges - min_num_edges
-intervals = 5
-num_tests = 100
-do_BFI = True
+intervals = 50
+num_tests = 10
+do_BFI = False
 
 def print_info(distances, times, title, num_brute=[]):
     print("-------------------" + title + "----------------------")
@@ -43,6 +43,13 @@ mean_times_cBFI = []
 mean_distances_CCTP = []
 mean_times_CCTP = []
 mean_num_brutes = []
+std_distances_BFI = []
+std_times_BFI = []
+std_distances_cBFI = []
+std_times_cBFI = []
+std_distances_CCTP = []
+std_times_CCTP = []
+std_num_brutes = []
 interval_values = []
 
 for i in range(intervals):
@@ -68,6 +75,8 @@ for i in range(intervals):
         t = np.array(times_BFI)
         mean_distances_BFI.append(np.mean(d))
         mean_times_BFI.append(np.mean(t))
+        std_distances_BFI.append(np.std(d))
+        std_times_BFI.append(np.std(t))
         print_info(d, t, "BFI")
 
     for test in tests:
@@ -79,6 +88,8 @@ for i in range(intervals):
     t = np.array(times_cBFI)
     mean_distances_cBFI.append(np.mean(d))
     mean_times_cBFI.append(np.mean(t))
+    std_distances_cBFI.append(np.std(d))
+    std_times_cBFI.append(np.std(t))
     print_info(d, t, "cBFI")
 
     for test in tests:
@@ -93,32 +104,37 @@ for i in range(intervals):
     mean_distances_CCTP.append(np.mean(d))
     mean_times_CCTP.append(np.mean(t))
     mean_num_brutes.append(np.mean(n))
+    std_distances_CCTP.append(np.std(d))
+    std_times_CCTP.append(np.std(t))
+    std_num_brutes.append(np.std(n))
     print_info(d, t, "CCTP", num_brute=n)
 
 print("")
-plt.plot(interval_values, mean_distances_CCTP)
-plt.plot(interval_values, mean_distances_cBFI)
-legend = ['Distance CCTP', 'Distance cBFI']
+plt.errorbar(interval_values, mean_distances_CCTP, std_distances_CCTP, color='green')
+plt.errorbar(interval_values, mean_distances_cBFI, std_distances_cBFI)
+legend = ['n-2','Distance CCTP', 'Distance cBFI']
 if do_BFI:
-    plt.plot(interval_values, mean_distances_BFI)
+    plt.errorbar(interval_values, mean_distances_BFI, std_distances_BFI)
     legend.append('Distance BFI')
-plt.legend(legend, loc='center left')
+plt.axvline(x=num_ver-2, color="black")
+plt.legend(legend, loc='upper left')
 plt.xlabel('Blocked Paths')
 plt.ylabel('Distance (units)')
 plt.title('n = ' + str(num_ver))
 plt.xlim(interval_values[0],interval_values[-1])
 plt.show()
 
-plt.plot(interval_values, mean_times_CCTP)
-plt.plot(interval_values, mean_times_cBFI)
-legend = ['Time CCTP', 'Time cBFI']
+plt.errorbar(interval_values, mean_times_CCTP, color='green')
+plt.errorbar(interval_values, mean_times_cBFI)
+legend = ['n-2','Time CCTP', 'Time cBFI']
 if do_BFI:
     plt.plot(interval_values, mean_times_BFI)
     legend.append('Time BFI')
-plt.legend(legend, loc='center left')
+plt.axvline(x=num_ver-2, color="black")
+plt.legend(legend, loc='upper left')
 plt.xlabel('Blocked Paths')
-plt.yscale('log')
 plt.ylabel('Time (s)')
+plt.yscale('log')
 plt.title('n = ' + str(num_ver))
 plt.xlim(interval_values[0],interval_values[-1])
 plt.show()
