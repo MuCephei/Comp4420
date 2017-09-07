@@ -30,6 +30,17 @@ def christofides_BFI(graph):
         if target_node in seen:
             shortest_route, distance = BFI.find_shortest_path(graph, edges, current_node, target_node)
             path = path + shortest_route
+            for point in shortest_route[:-1]:
+                if point.b in to_visit:
+                    to_visit.remove(point.b)
+                    for x in range(point.b):
+                        if graph.all_edges[point.b][x] == 1 and x not in seen:
+                            seen.add(x)
+                            edges[point.b][x] = 1
+                    for y in range(point.b + 1, len(christofides_route)):
+                        if graph.all_edges[y][point.b] == 1 and y not in seen:
+                            seen.add(y)
+                            edges[y][point.b] = 1
             current_node = target_node
             to_visit.pop(0)
         else:

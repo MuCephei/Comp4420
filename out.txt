@@ -1,554 +1,502 @@
 Summary
 
-Vertices=25 k=0 Edges=300
+Vertices=21 k=0 Edges=210
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2349.38793801
-Standard deviation               365.147987282
+Mean                             2096.04958824
+Standard deviation               400.714036463
 
            Time
-Mean                             2.0171125
-Standard deviation               3.49471066857
+Mean                             0.190605656835
+Standard deviation               0.381187329449
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             464.809170956
-Standard deviation               35.2173794483
+Mean                             422.845465007
+Standard deviation               36.2125107082
 
            Time
-Mean                             2.0217518
-Standard deviation               3.506042616
+Mean                             0.17964683723
+Standard deviation               0.36246998943
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=5 Edges=295
+Vertices=21 k=10 Edges=200
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2412.03088927
-Standard deviation               400.54730065
+Mean                             2131.11133908
+Standard deviation               403.070789803
 
            Time
-Mean                             0.5410303
-Standard deviation               0.63263783133
+Mean                             0.308101878888
+Standard deviation               1.12294547819
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             469.052927221
-Standard deviation               33.0476305734
+Mean                             498.085123414
+Standard deviation               86.6191374978
 
            Time
-Mean                             0.5408407
-Standard deviation               0.630127660051
+Mean                             0.321754630506
+Standard deviation               1.20927044763
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=11 Edges=289
+Vertices=21 k=20 Edges=190
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2694.78681064
-Standard deviation               638.331204906
+Mean                             2140.51822615
+Standard deviation               414.616130958
 
            Time
-Mean                             0.3541908
-Standard deviation               0.520231603221
+Mean                             0.228618428933
+Standard deviation               1.03918986486
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             541.244784427
-Standard deviation               81.0476669839
+Mean                             535.806028527
+Standard deviation               76.3439002401
 
            Time
-Mean                             0.3485735
-Standard deviation               0.522308414858
+Mean                             0.222196254635
+Standard deviation               1.00746432768
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=16 Edges=284
+Vertices=21 k=30 Edges=180
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2743.56777213
-Standard deviation               461.81493188
+Mean                             2143.59360859
+Standard deviation               343.991295252
 
            Time
-Mean                             1.5787168
-Standard deviation               2.76911026004
+Mean                             0.13425865049
+Standard deviation               0.275919858314
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             568.887268212
-Standard deviation               80.7912155605
+Mean                             560.312809297
+Standard deviation               88.45210565
 
            Time
-Mean                             1.5502861
-Standard deviation               2.68904926889
+Mean                             0.131571514127
+Standard deviation               0.276532139978
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=22 Edges=278
+Vertices=21 k=40 Edges=170
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2530.9420272
-Standard deviation               496.709231291
+Mean                             2198.35504733
+Standard deviation               370.954928894
 
            Time
-Mean                             0.7608021
-Standard deviation               0.758119696662
+Mean                             0.182945402076
+Standard deviation               0.368204232869
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             585.306183914
-Standard deviation               78.5145795731
+Mean                             602.713891806
+Standard deviation               74.6846108594
 
            Time
-Mean                             0.7578297
-Standard deviation               0.755639055551
+Mean                             0.183355716569
+Standard deviation               0.371636945358
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=28 Edges=272
+Vertices=21 k=50 Edges=160
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2642.93212169
-Standard deviation               503.0704862
+Mean                             2288.73604555
+Standard deviation               440.336971198
 
            Time
-Mean                             0.3148056
-Standard deviation               0.449863262838
+Mean                             0.122219893566
+Standard deviation               0.216023476855
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             573.875129104
-Standard deviation               49.2339141744
+Mean                             632.208688449
+Standard deviation               84.2567747624
 
            Time
-Mean                             0.3067357
-Standard deviation               0.441641468572
+Mean                             0.118660748142
+Standard deviation               0.213016646019
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=33 Edges=267
+Vertices=21 k=60 Edges=150
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2652.45925665
-Standard deviation               548.010786647
+Mean                             2351.2836111
+Standard deviation               376.260067173
 
            Time
-Mean                             2.0940403
-Standard deviation               3.51792949488
+Mean                             0.102322312383
+Standard deviation               0.226728906102
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             595.97781028
-Standard deviation               35.4678654204
+Mean                             674.614213346
+Standard deviation               82.4106519597
 
            Time
-Mean                             2.070557
-Standard deviation               3.48311617551
+Mean                             0.0993220051821
+Standard deviation               0.227253283618
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=39 Edges=261
+Vertices=21 k=70 Edges=140
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2853.67143436
-Standard deviation               491.469868926
+Mean                             2342.22615336
+Standard deviation               408.931244393
 
            Time
-Mean                             2.224118
-Standard deviation               3.67750788438
+Mean                             0.151625382837
+Standard deviation               0.325760070807
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             633.672691029
-Standard deviation               50.6172306626
+Mean                             699.858020102
+Standard deviation               103.381828594
 
            Time
-Mean                             2.2172986
-Standard deviation               3.67791603021
+Mean                             0.148686633671
+Standard deviation               0.320665288614
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=45 Edges=255
+Vertices=21 k=80 Edges=130
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2402.19687548
-Standard deviation               461.27821921
+Mean                             2462.00584983
+Standard deviation               536.737662459
 
            Time
-Mean                             1.5146274
-Standard deviation               2.66133745745
+Mean                             0.240259357982
+Standard deviation               0.443501101794
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             584.691090391
-Standard deviation               76.5582936973
+Mean                             751.867532539
+Standard deviation               115.934609147
 
            Time
-Mean                             1.4974198
-Standard deviation               2.63038334761
+Mean                             0.239661086373
+Standard deviation               0.446597334299
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=50 Edges=250
+Vertices=21 k=90 Edges=120
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2507.4570323
-Standard deviation               411.022083595
+Mean                             2431.48186419
+Standard deviation               466.022556046
 
            Time
-Mean                             1.1146558
-Standard deviation               2.8869885462
+Mean                             0.346260077886
+Standard deviation               1.05087503266
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             683.215147284
-Standard deviation               134.317056091
+Mean                             770.953314854
+Standard deviation               122.469299027
 
            Time
-Mean                             1.0752396
-Standard deviation               2.80435708209
+Mean                             0.340455873272
+Standard deviation               1.04484208144
+
+           Num Brute
+Mean                             0.02
+Standard deviation               0.14
+-----------------------------------------
+
+Vertices=21 k=100 Edges=110
+
+-------------------ACA----------------------
+            Distance
+Mean                             2616.4670056
+Standard deviation               484.073569726
+
+           Time
+Mean                             0.389681820862
+Standard deviation               1.11966395342
+-----------------------------------------
+-------------------ICR----------------------
+            Distance
+Mean                             848.871181076
+Standard deviation               136.88645481
+
+           Time
+Mean                             0.388155853102
+Standard deviation               1.11236679703
+
+           Num Brute
+Mean                             0.02
+Standard deviation               0.14
+-----------------------------------------
+
+Vertices=21 k=110 Edges=100
+
+-------------------ACA----------------------
+            Distance
+Mean                             2822.38445789
+Standard deviation               593.338677069
+
+           Time
+Mean                             0.413329632445
+Standard deviation               1.15957905392
+-----------------------------------------
+-------------------ICR----------------------
+            Distance
+Mean                             898.229957348
+Standard deviation               143.281995131
+
+           Time
+Mean                             0.415007531069
+Standard deviation               1.1740272105
 
            Num Brute
 Mean                             0.0
 Standard deviation               0.0
 -----------------------------------------
 
-Vertices=25 k=56 Edges=244
+Vertices=21 k=120 Edges=90
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2523.14525234
-Standard deviation               457.637265802
+Mean                             2818.74472583
+Standard deviation               639.69416429
 
            Time
-Mean                             1.258148
-Standard deviation               2.33628432592
+Mean                             0.183624085768
+Standard deviation               0.352079562221
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             652.916646613
-Standard deviation               119.934789516
+Mean                             954.710157295
+Standard deviation               112.101041491
 
            Time
-Mean                             1.2541582
-Standard deviation               2.31644899304
+Mean                             0.183880601368
+Standard deviation               0.35630880693
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             0.08
+Standard deviation               0.271293199325
 -----------------------------------------
 
-Vertices=25 k=61 Edges=239
+Vertices=21 k=130 Edges=80
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2553.37053426
-Standard deviation               417.723547119
+Mean                             2770.23568237
+Standard deviation               559.514301818
 
            Time
-Mean                             1.119592
-Standard deviation               2.48517097529
+Mean                             0.185653421873
+Standard deviation               0.313963039186
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             637.973341465
-Standard deviation               67.6525511572
+Mean                             996.676574166
+Standard deviation               120.28283268
 
            Time
-Mean                             1.1167199
-Standard deviation               2.48310920985
+Mean                             0.184113006377
+Standard deviation               0.316293535539
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             0.16
+Standard deviation               0.366606055596
 -----------------------------------------
 
-Vertices=25 k=67 Edges=233
+Vertices=21 k=140 Edges=70
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2603.75959456
-Standard deviation               395.355097946
+Mean                             3246.11915698
+Standard deviation               695.699627489
 
            Time
-Mean                             1.9411046
-Standard deviation               3.27197359568
+Mean                             0.46192157386
+Standard deviation               1.51553856007
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             704.579932235
-Standard deviation               96.8300560846
+Mean                             1108.65335934
+Standard deviation               183.865913857
 
            Time
-Mean                             1.9343169
-Standard deviation               3.25931826759
+Mean                             0.456233280065
+Standard deviation               1.49489468522
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             0.12
+Standard deviation               0.324961536185
 -----------------------------------------
 
-Vertices=25 k=73 Edges=227
+Vertices=21 k=150 Edges=60
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2775.32292736
-Standard deviation               378.556173191
+Mean                             3399.75372927
+Standard deviation               627.999981195
 
            Time
-Mean                             0.7838783
-Standard deviation               0.738725280127
+Mean                             0.199438784851
+Standard deviation               0.364782543809
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             733.98157569
-Standard deviation               94.8691147343
+Mean                             1222.02324131
+Standard deviation               162.857542954
 
            Time
-Mean                             0.7758206
-Standard deviation               0.734810071688
+Mean                             0.213065142041
+Standard deviation               0.400394672308
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             0.72
+Standard deviation               0.63371918071
 -----------------------------------------
 
-Vertices=25 k=78 Edges=222
+Vertices=21 k=160 Edges=50
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2802.96887015
-Standard deviation               615.585625905
+Mean                             3566.58800081
+Standard deviation               508.259941323
 
            Time
-Mean                             0.1363243
-Standard deviation               0.13198268819
+Mean                             0.103359582952
+Standard deviation               0.218836075641
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             719.12788191
-Standard deviation               123.352229121
+Mean                             1362.49085963
+Standard deviation               235.776404921
 
            Time
-Mean                             0.135149
-Standard deviation               0.13300523728
+Mean                             0.103793157805
+Standard deviation               0.221581043032
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             1.06
+Standard deviation               0.810185164021
 -----------------------------------------
 
-Vertices=25 k=84 Edges=216
+Vertices=21 k=170 Edges=40
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2698.77956641
-Standard deviation               733.863208817
+Mean                             3832.00107161
+Standard deviation               652.435471343
 
            Time
-Mean                             2.1599625
-Standard deviation               3.49146879608
+Mean                             0.337394709323
+Standard deviation               1.06977810417
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             728.971932592
-Standard deviation               56.1657405073
+Mean                             1610.55508206
+Standard deviation               288.774949941
 
            Time
-Mean                             2.202862
-Standard deviation               3.57666751783
+Mean                             0.333100287031
+Standard deviation               1.05234683215
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             1.7
+Standard deviation               1.11803398875
 -----------------------------------------
 
-Vertices=25 k=90 Edges=210
+Vertices=21 k=180 Edges=30
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2765.30646063
-Standard deviation               402.942533393
+Mean                             3926.01385441
+Standard deviation               854.92095366
 
            Time
-Mean                             2.2488336
-Standard deviation               3.74519930705
+Mean                             0.156326786961
+Standard deviation               0.295763472399
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             732.792807956
-Standard deviation               87.0001436885
+Mean                             1946.08696352
+Standard deviation               340.577708755
 
            Time
-Mean                             2.166615
-Standard deviation               3.63383883757
+Mean                             0.153999702109
+Standard deviation               0.283838520889
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             3.06
+Standard deviation               1.0278132126
 -----------------------------------------
 
-Vertices=25 k=95 Edges=205
+Vertices=21 k=190 Edges=20
 
--------------------cBFI----------------------
+-------------------ACA----------------------
             Distance
-Mean                             2779.68365034
-Standard deviation               479.382777449
+Mean                             3480.94574447
+Standard deviation               873.935488018
 
            Time
-Mean                             5.3878401
-Standard deviation               13.9451882536
+Mean                             0.138718470824
+Standard deviation               0.267886863314
 -----------------------------------------
--------------------CCTP----------------------
+-------------------ICR----------------------
             Distance
-Mean                             743.515740362
-Standard deviation               105.617158303
+Mean                             2410.76073709
+Standard deviation               430.996987554
 
            Time
-Mean                             5.3973148
-Standard deviation               13.9658755477
+Mean                             0.138042641925
+Standard deviation               0.268979392884
 
            Num Brute
-Mean                             0.0
-Standard deviation               0.0
+Mean                             4.62
+Standard deviation               1.29444969002
 -----------------------------------------
-
-Vertices=25 k=101 Edges=199
-
--------------------cBFI----------------------
-            Distance
-Mean                             2977.81767364
-Standard deviation               310.613385889
-
-           Time
-Mean                             5.0134954
-Standard deviation               14.3294121504
------------------------------------------
--------------------CCTP----------------------
-            Distance
-Mean                             800.163925176
-Standard deviation               111.460904113
-
-           Time
-Mean                             5.0089559
-Standard deviation               14.3278511098
-
-           Num Brute
-Mean                             0.0
-Standard deviation               0.0
------------------------------------------
-
-Vertices=25 k=107 Edges=193
-
--------------------cBFI----------------------
-            Distance
-Mean                             3041.65132974
-Standard deviation               531.841901801
-
-           Time
-Mean                             0.6186205
-Standard deviation               0.733505316167
------------------------------------------
--------------------CCTP----------------------
-            Distance
-Mean                             871.954922889
-Standard deviation               77.0399038717
-
-           Time
-Mean                             0.640372
-Standard deviation               0.77583375355
-
-           Num Brute
-Mean                             0.0
-Standard deviation               0.0
------------------------------------------
-
-Vertices=25 k=112 Edges=188
-
--------------------cBFI----------------------
-            Distance
-Mean                             2799.24617843
-Standard deviation               360.567200372
-
-           Time
-Mean                             0.6183645
-Standard deviation               0.678796643917
------------------------------------------
--------------------CCTP----------------------
-            Distance
-Mean                             841.623759386
-Standard deviation               112.10020158
-
-           Time
-Mean                             0.6172546
-Standard deviation               0.675803959336
-
-           Num Brute
-Mean                             0.0
-Standard deviation               0.0
------------------------------------------
-
-Vertices=25 k=118 Edges=182
-
--------------------cBFI----------------------
-            Distance
-Mean                             3254.03692593
-Standard deviation               662.980505523
-
-           Time
-Mean                             0.4447257
-Standard deviation               0.647336011131
------------------------------------------
--------------------CCTP----------------------
-            Distance
-Mean                             849.395875476
-Standard deviation               89.4339337293
-
-           Time
-Mean                             0.4413795
-Standard deviation               0.648193421099
-
-           Num Brute
-Mean                             0.0
-Standard deviation               0.0
------------------------------------------
-
-Vertices=25 k=123 Edges=177
 
