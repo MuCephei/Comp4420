@@ -1,24 +1,57 @@
 import random
 import math
-from sets import Set
+import copy
 
 class Graph:
     max_x = 100
     max_y = 100
 
     # Note that Vertices are [Y coords, X coords]
-    def __init__(self, number_of_vertices, number_to_remove):
-        self.number_of_vertices = number_of_vertices
-        self.number_of_broken_edges = number_to_remove
+    def __init__(self, number_of_vertices, number_of_edges, vertices=None):
+        self.n = number_of_vertices
+        self.e = number_of_edges
 
-        self.vertices = [[random.random() * Graph.max_y, random.random() * Graph.max_x] for n in range(self.number_of_vertices)]
-        self.all_edges = remove_edges(self.number_of_broken_edges, self.number_of_vertices)
+        if vertices:
+            self.vertices = vertices
+        else:
+            self.vertices = [[random.random() * Graph.max_y, random.random() * Graph.max_x] for n in range(self.n)]
+
+        self.edges = self.create_edges()
 
     def distance(self, a, b):
         return math.sqrt((a[1] - b[1])**2 + (a[0] - b[0])**2)
 
     def __str__(self):
-        return str(self.vertices) + '\n' + str(self.all_edges)
+        return str(self.vertices) + '\n' + str(self.edges)
+
+    def create_edges(self):
+        unused_edges = set(sum(map(lambda b: [Edge(a, b) for a in range(b + 1, self.n)], range(self.n)), []))
+        edge_set = set()
+        #first connect the unconnected edges
+        for node in range(1, self.n):
+            rand = random.randint(0, node - 1)
+            a = max(rand, node)
+            b = min(rand, node)
+            new_edge = Edge(a, b)
+            edge_set.add(new_edge)
+            unused_edges.remove(new_edge)
+
+        while len(edge_set) < self.e:
+            new_edge = random.sample(unused_edges, 1)[0]
+            edge_set.add(new_edge)
+            unused_edges.remove(new_edge)
+
+        edges = [[0] * m for m in range(self.n)]
+
+        for e in edge_set:
+            edges[e.a][e.b] = 1
+
+        return edges
+
+    def copy(self, number_of_edges):
+        graph_copy = Graph(self.n, number_of_edges, self.vertices)
+
+        return graph_copy
 
 
 class Edge:
@@ -34,43 +67,7 @@ class Edge:
     def __eq__(self, other):
         return self.a == other.a and self.b == other.b
 
+    def __hash__(self):
+        return hash(self.__str__())
+
     __repr__ = __str__
-
-
-def is_edge_safe_to_remove(edge, edges, edges_as_matrix, size):
-    if edges_as_matrix[edge[0]][edge[1]] == 1:
-        vertices = Set()
-        new_vertices = Set([0])
-        newer_vertices = Set()
-        edges_as_matrix[edge[0]][edge[1]] = 0
-        while len(new_vertices) > 0:
-            vertices = vertices.union(new_vertices)
-            newer_vertices.clear()
-            for v in new_vertices:
-                for x in range(v):
-                    if x not in vertices and x not in newer_vertices:
-                        if edges_as_matrix[v][x] == 1:
-                            newer_vertices.add(x)
-                for y in range(v, size):
-                    if y not in vertices and y not in newer_vertices:
-                        if edges_as_matrix[y][v] == 1:
-                            newer_vertices.add(y)
-            new_vertices = newer_vertices.copy()
-            newer_vertices.clear()
-
-        edges_as_matrix[edge[0]][edge[1]] = 1
-        return len(vertices) == size
-    else:
-        return False
-
-
-def remove_edges(number_to_remove, number_of_vertices):
-    all_edges = [(m, n) for m in range(number_of_vertices) for n in range(m)]
-    edges_as_matrix = [[1 for n in range(m)] for m in range(number_of_vertices)]
-    for removal in range(number_to_remove):
-        edge = random.choice(all_edges)
-        while not is_edge_safe_to_remove(edge, all_edges, edges_as_matrix, number_of_vertices):
-            edge = random.choice(all_edges)
-        all_edges.remove(edge)
-        edges_as_matrix[edge[0]][edge[1]] = 0
-    return edges_as_matrix
