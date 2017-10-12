@@ -11,6 +11,6 @@ class NNPessimist(Traversal):
             self.go_to_closest_unvisted(to_visit)
             to_visit.remove(self.current_node)
 
-            if not len(to_visit) and not self.finished:
-                to_visit = {0}
-                self.finished = True
+        to_visit = {0}
+        self.go_to_closest_unvisted(to_visit)
+

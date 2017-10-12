@@ -6,10 +6,16 @@ from Christofides import christofides
 def christofides_alg(graph):
     vertices = graph.vertices
     size = len(vertices)
-    distance_matrix = [[0] * size] * size
+    distance_matrix = [[0 for a in range(size)] for b in range(size)]
+    print(vertices)
+    print(distance_matrix)
     for x in range(size):
         for y in range(x+1, size):
-            distance_matrix[x][y] = graph.distance(vertices[x], vertices[y])
+            distance = graph.distance(vertices[x], vertices[y])
+            print(distance)
+            distance_matrix[x][y] = distance
+            distance_matrix[y][x] = distance
+    print(distance_matrix)
     result = christofides.compute(distance_matrix)
     solution = result['Christofides_Solution']
     path = []
