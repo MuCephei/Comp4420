@@ -1,5 +1,5 @@
 import BFI
-from Traversal import Traversal
+from Generate import Traversal
 
 class ChristofidesBFI(Traversal):
     def __init__(self, graph, route):

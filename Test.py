@@ -1,78 +1,88 @@
-from CCTP import CCTP
 import pickle
 import constants as k
-from christofides_BFI import christofides_BFI
+from Generate import OfflineBruteForce, graph_type
+from hybrid_nn import hybrid_nn
 from nearest_neighbour_pessimist import NNPessimist
 
 num_intervals = k.num_intervals + 1
 
-for num_ver in range(18, 5, -1):
-    total_distances_CCTP = [0] * num_intervals
-    averages_CCTP = [0] * num_intervals
-    total_num_brute = [0] * num_intervals
-    averages_num_brute = [0] * num_intervals
-    max_distance_CCTP = [0] * num_intervals
-    min_distance_CCTP = [float("inf")] * num_intervals
+prefix = graph_type.prefix()
 
-    total_distances_CBFI = [0] * num_intervals
-    averages_CBFI = [0] * num_intervals
-    max_distance_CBFI = [0] * num_intervals
-    min_distance_CBFI = [float("inf")] * num_intervals
+for num_ver in k.nums:
+
+    total_distances_offline = [0] * num_intervals
+    averages_offline = [0] * num_intervals
 
     total_distances_nn = [0] * num_intervals
     averages_nn = [0] * num_intervals
-    max_distance_nn = [0] * num_intervals
-    min_distance_nn = [float("inf")] * num_intervals
+    max_ratio_nn = [0] * num_intervals
 
-    with open(k.get_cbfi_name(num_ver), 'w') as cbfi_out:
-        with open(k.get_cctp_name(num_ver), 'w') as cctp_out:
-            with open(k.get_nn_name(num_ver), 'w') as nn_out:
-                for index, i in enumerate(sorted(k.intervals(num_ver))):
-                    with open(k.get_graph_name(i, num_ver)) as f:
-                        tests = pickle.load(f)
+    total_distances_cnn = [0] * num_intervals
+    averages_cnn = [0] * num_intervals
+    max_ratio_cnn = [0] * num_intervals
 
-                    with open(k.get_path_name(num_ver)) as f:
-                        paths = pickle.load(f)
+    total_distances_opt_nn = [0] * num_intervals
+    averages_opt_nn = [0] * num_intervals
+    max_ratio_opt_nn = [0] * num_intervals
 
-                    for q, test in enumerate(tests):
-                        path = paths[q]
+    with open(prefix + k.get_BFI_name(num_ver), 'w') as BFI_out:
+        with open(prefix + k.get_nn_name(num_ver), 'w') as nn_out:
+            with open(prefix + k.get_cnn_name(num_ver), 'w') as cnn_out:
+                with open(prefix + k.get_opt_nn_name(num_ver), 'w') as opt_nn:
+                    for index, i in enumerate(sorted(graph_type.intervals(num_ver))):
+                        with open(prefix + k.get_graph_name(i, num_ver)) as f:
+                            tests = pickle.load(f)
 
-                        cctp = CCTP(test, path)
-                        cctp.compute()
-                        path_CCTP, distance, num_brute = cctp.path, cctp.get_distance(), cctp.num_brute
-                        total_distances_CCTP[index] += distance
-                        total_num_brute[index] = total_num_brute[index] + num_brute
-                        max_distance_CCTP[index] = max(max_distance_CCTP[index], distance)
-                        min_distance_CCTP[index] = min(min_distance_CCTP[index], distance)
+                        with open(prefix + k.get_path_name(num_ver)) as f:
+                            paths = pickle.load(f)
 
-                        CBFI_path, distance_CBFI = christofides_BFI(test, path)
-                        total_distances_CBFI[index] += distance_CBFI
-                        max_distance_CBFI[index] = max(max_distance_CBFI[index], distance_CBFI)
-                        min_distance_CBFI[index] = min(min_distance_CBFI[index], distance_CBFI)
+                        with open(prefix + k.get_opt_path_name(num_ver)) as f:
+                            opt_paths = pickle.load(f)
 
-                        nn = NNPessimist(test)
-                        nn.compute()
-                        nn_path, distance_nn = nn.path, nn.get_distance()
-                        total_distances_nn[index] += distance_nn
-                        max_distance_nn[index] = max(max_distance_nn[index], distance_nn)
-                        min_distance_nn[index] = min(min_distance_nn[index], distance_nn)
+                        for q, test in enumerate(tests):
+                            path = paths[q]
+                            opt_path = opt_paths[q]
 
-                    averages_CCTP[index] = total_distances_CCTP[index] / k.num_tests
-                    averages_num_brute[index] = total_num_brute[index] / k.num_tests
+                            offline = OfflineBruteForce(test, num_ver)
+                            offline_path = offline.path
+                            distance_offline = offline.distance
+                            total_distances_offline[index] += distance_offline
 
-                    averages_CBFI[index] = total_distances_CBFI[index] / k.num_tests
+                            CNN_path, distance_cnn = hybrid_nn(test, path[0], path[1])
+                            total_distances_cnn[index] += distance_cnn
+                            max_ratio_cnn[index] = max(max_ratio_cnn[index], distance_cnn/distance_offline)
 
-                    averages_nn[index] = total_distances_nn[index] / k.num_tests
+                            opt_nn_path, distance_opt_nn = hybrid_nn(test, opt_path[0], opt_path[1])
+                            total_distances_opt_nn[index] += distance_opt_nn
+                            max_ratio_opt_nn[index] = max(max_ratio_opt_nn[index], distance_opt_nn/distance_offline)
 
-                nn_out.write('num_ver,max,min,mean\n')
-                cctp_out.write('num_ver,max,min,mean\n')
-                cbfi_out.write('num_ver,max,min,mean\n')
+                            nn = NNPessimist(test)
+                            nn.compute()
+                            nn_path, distance_nn = nn.path, nn.get_distance()
+                            total_distances_nn[index] += distance_nn
+                            max_ratio_nn[index] = max(max_ratio_nn[index], distance_nn/distance_offline)
 
-                for index, i in enumerate(sorted(k.intervals(num_ver))):
-                    nn_out.write(','.join(
-                        map(str, [i, max_distance_nn[index], min_distance_nn[index], averages_nn[index]])) + '\n')
-                    cbfi_out.write(','.join(
-                        map(str, [i, max_distance_CBFI[index], min_distance_CBFI[index], averages_CBFI[index]])) + '\n')
-                    cctp_out.write(','.join(
-                        map(str, [i, max_distance_CCTP[index], min_distance_CCTP[index], averages_CCTP[index]])) + '\n')
+
+                        averages_offline[index] = total_distances_offline[index] / k.num_tests
+
+                        averages_cnn[index] = total_distances_cnn[index] / k.num_tests
+
+                        averages_opt_nn[index] = total_distances_opt_nn[index] / k.num_tests
+
+                        averages_nn[index] = total_distances_nn[index] / k.num_tests
+
+                    nn_out.write('num_ver,max_ratio,mean\n')
+                    BFI_out.write('num_ver,max_ratio,mean\n')
+                    cnn_out.write('num_ver,max_ratio,mean\n')
+                    opt_nn.write('num_ver,max_ratio,mean\n')
+
+                    for index, i in enumerate(sorted(graph_type.intervals(num_ver))):
+                        nn_out.write(','.join(
+                            map(str, [i, max_ratio_nn[index], averages_nn[index]])) + '\n')
+                        BFI_out.write(','.join(
+                            map(str, [i, 1, averages_offline[index]])) + '\n')
+                        cnn_out.write(','.join(
+                            map(str, [i, max_ratio_cnn[index], averages_cnn[index]])) + '\n')
+                        opt_nn.write(','.join(
+                            map(str, [i, max_ratio_opt_nn[index], averages_opt_nn[index]])) + '\n')
 

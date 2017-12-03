@@ -1,6 +1,5 @@
-from Generate import Edge
+from Generate import Edge, Traversal
 import copy
-from Traversal import Traversal
 
 class CCTP(Traversal):
     def __init__(self, graph, route):
@@ -36,7 +35,7 @@ class CCTP(Traversal):
                         target = 1
                         while best_path[m][target] not in self.seen:
                             target = target + 1
-                        self.go_to_closest_unvisted(to_visit[m])
+                        self.go_to_closest_unvisited(to_visit[m])
                         to_visit[m+1].remove(self.current_node)
                         self.num_brute = self.num_brute + 1
                         self.look_around()
@@ -47,13 +46,13 @@ class CCTP(Traversal):
                     target = 1
                     while best_path[m][target] not in self.seen:
                         target = target + 1
-                    self.go_to_closest_unvisted(to_visit[m])
+                    self.go_to_closest_unvisited(to_visit[m])
                     to_visit[m + 1].remove(self.current_node)
                     self.num_brute = self.num_brute + 1
                 self.look_around()
             m = m + 1
 
-        self.go_to_closest_unvisted({0})
+        self.go_to_closest_unvisited({0})
 
     def shortcut(self, direction, best_path, _full_path, to_visit, m):
         if len(to_visit) == m + 1:
@@ -72,7 +71,8 @@ class CCTP(Traversal):
             min_ij = min(vi, vj)
             max_ij = max(vi, vj)
             if self.edges[max_ij][min_ij]:
-                to_visit[m + 1].remove(vj)
+                if vj in to_visit[m + 1]:
+                    to_visit[m + 1].remove(vj)
                 self.path += [Edge(vi, vj)]
                 self.current_node = vj
                 self.look_around()
@@ -93,7 +93,8 @@ class CCTP(Traversal):
                     min_lj = min(vl, vj)
                     max_lj = max(vl, vj)
                 if vl != vj:
-                    to_visit[m + 1].remove(vj)
+                    if vj in to_visit[m + 1]:
+                        to_visit[m + 1].remove(vj)
                     self.path += [Edge(vi, vl), Edge(vl, vj)]
                     self.current_node = vj
                     self.look_around()

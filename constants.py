@@ -1,6 +1,8 @@
 num_intervals = 9
 num_tests = 50
 
+nums = [40]
+
 def min_num(num_ver):
     return num_ver - 1
 
@@ -20,7 +22,13 @@ def get_graph_name(number, n):
 def get_path_name(n):
     return 'path/path' + str(n) + '.pkl'
 
-def get_cctp_name(number):
+def get_opt_path_name(n):
+    return 'path/opt_path' + str(n) + '.pkl'
+
+def get_BFI_name(number):
+    return 'out/BFI' + str(number) + '.txt'
+
+def get_cyclic_name(number):
     return 'out/cctp' + str(number) + '.txt'
 
 def get_cbfi_name(number):
@@ -28,3 +36,9 @@ def get_cbfi_name(number):
 
 def get_nn_name(number):
     return 'out/nn' + str(number) + '.txt'
+
+def get_cnn_name(number):
+    return 'out/cnn' + str(number) + '.txt'
+
+def get_opt_nn_name(number):
+    return 'out/opt_nn' + str(number) + '.txt'

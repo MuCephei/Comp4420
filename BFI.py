@@ -1,5 +1,4 @@
-from Generate import Edge
-
+from Edge import Edge
 
 def helper(graph, start, curr, visited):
     shortest_path = None
@@ -56,9 +55,7 @@ def find_shortest_path(graph, edges, start, end):
 
         for n in range(len(neighbors)):
             if not visited[neighbors[n]]:
-                new_distance = distance[curr] + graph.distance(
-                    graph.vertices[curr], graph.vertices[neighbors[n]]
-                )
+                new_distance = distance[curr] + graph.distance(curr, neighbors[n])
 
                 old_distance = distance[neighbors[n]]
                 if new_distance < old_distance or old_distance is None:
